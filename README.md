@@ -6,7 +6,7 @@ imgタグで指定した画像をcheckboxのドット絵に変換するjQueryプ
 HTMLでscriptを読み込みます。
 ```html
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-<script src="js/jquery.dotCheckbox.js"></script>
+<script src="javascripts/jquery.dotCheckbox.js"></script>
 ```
 
 $(SELECTOR).dotCheckbox()で
