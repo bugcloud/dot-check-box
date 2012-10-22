@@ -7,6 +7,12 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <style>
+      input[type="checkbox"] {
+        margin: 0;
+        width: 20px;
+      }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -31,13 +37,15 @@
         <h1>.checkbox - jQuery Plugin</h1>
 
 <p>imgタグで指定した画像をcheckboxのドット絵に変換するjQueryプラグインです。</p>
+<p><img src="images/dot01.png"> This image will be converted to</p>
+<p><img src="images/dot01.png" id="dot01"></p>
 
 <h2>How to use</h2>
 
 <p>HTMLでscriptを読み込みます。</p>
 
 <div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"js/jquery.dotCheckbox.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"javascripts/jquery.dotCheckbox.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 </pre></div>
 
 <p>$(SELECTOR).dotCheckbox()で
@@ -76,6 +84,12 @@
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script src="javascripts/jquery.dotCheckbox.js"></script>
+    <script>
+      $(function() {
+          $("#dot01").dotCheckbox({ animation: "blink" });
+      });
+    </script>
   </body>
 </html>
