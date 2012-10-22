@@ -31,7 +31,7 @@ $.fn.dotCheckbox = (opt) ->
         row = []
         col = 0
         while i<imgData.data.length
-          if d_[i] is 0 and d_[i+1] is 0 and d_[i+2] is 0 and d_[i+3] is 255
+          unless d_[i] is 255 and d_[i+1] is 255 and d_[i+2] is 255 and d_[i+3] is 255
             row.push {checked: true}
           else
             row.push {checked: false}
@@ -42,9 +42,10 @@ $.fn.dotCheckbox = (opt) ->
             row = []
             col = 0
 
-        html = "<div>"
-        for r in dots
-          html = "#{html}<div>"
+        html = "<div class='dot-check'>"
+        $_.dots = dots
+        for r in $_.dots
+          html = "#{html}<div class='dot-check-row'>"
           for c in r
             html = "#{html}<input type='checkbox'#{if c.checked then " checked" else ""}>"
           html = "#{html}</div>"
@@ -60,6 +61,44 @@ $.fn.dotCheckbox = (opt) ->
                 $(this).attr "checked", false
               else
                 $(this).attr "checked", "checked"
+          , 1000
+        else if options.animation is "horizontal-slide"
+          offsetIndex = img.width
+          setInterval () ->
+            # clear
+            $t.find("input[type='checkbox']").attr "checked", false
+            # draw
+            for rowIndex in [0..($_.dots.length - 1)]
+              row = $_.dots[rowIndex]
+              for colIndex in [0..(row.length - 1)]
+                $checkbox = $t.find "input[type='checkbox']:eq(#{rowIndex*$_.dots.length + colIndex + (offsetIndex - if offsetIndex <= row.length/2 then 0 else row.length)})"
+                if row[colIndex].checked
+                  $checkbox.attr "checked", "checked"
+                else
+                  $checkbox.attr "checked", false
+            offsetIndex--
+            if offsetIndex <= 0
+              offsetIndex = img.width
+          , 1000
+
+        else if options.animation is "vertical-slide"
+          # $_.dots.length == img.height
+          offsetIndex = -1 * img.height
+          setInterval () ->
+            # clear
+            $t.find("input[type='checkbox']").attr "checked", false
+            # draw
+            for rowIndex in [0..($_.dots.length - 1)]
+              row = $_.dots[rowIndex]
+              for colIndex in [0..(row.length - 1)]
+                $checkbox = $t.find "input[type='checkbox']:eq(#{rowIndex*$_.dots.length + colIndex + offsetIndex*$_.dots.length})"
+                if row[colIndex].checked
+                  $checkbox.attr "checked", "checked"
+                else
+                  $checkbox.attr "checked", false
+            offsetIndex++
+            if offsetIndex >= 0
+              offsetIndex = -1 * img.height
           , 1000
 
       img.src = $_.attr 'src'

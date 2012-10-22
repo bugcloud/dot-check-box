@@ -12,6 +12,8 @@
         margin: 0;
         width: 20px;
       }
+      .dot-check-row {
+      }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
@@ -70,6 +72,11 @@
 <strong>none</strong>
 (アニメーションなし)です。</p>
 
+<p><img src="images/dot02.png"> This image will be converted to</p>
+<p><img src="images/dot02.png" id="dot02"></p>
+
+<p><img src="images/dot03.png"> This image will be converted to</p>
+<p><img src="images/dot03.png" id="dot03"></p>
 <h2>Sample</h2>
 
 <p><a href="http://bugcloud.github.com/dot-check-box/">http://bugcloud.github.com/dot-check-box/</a></p>
@@ -88,7 +95,9 @@
     <script src="javascripts/jquery.dotCheckbox.js"></script>
     <script>
       $(function() {
-          $("#dot01").dotCheckbox({ animation: "blink" });
+          $("#dot01").dotCheckbox();
+          $("#dot02").dotCheckbox({ animation: "vertical-slide" });
+          $("#dot03").dotCheckbox({ animation: "blink" });
       });
     </script>
   </body>
