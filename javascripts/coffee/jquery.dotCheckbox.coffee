@@ -51,12 +51,13 @@ $.fn.dotCheckbox = (opt) ->
           html = "#{html}</div>"
         html = "#{html}</div>"
         $t = $_.parent().append html
+        $all = $t.find("input[type='checkbox']")
         $_.parent().find("canvas:last").remove()
         $_.remove()
 
         if options.animation is "blink"
           setInterval () ->
-            $t.find("input[type='checkbox']").each () ->
+            $all.each () ->
               if $(this).is(":checked")
                 $(this).attr "checked", false
               else
@@ -66,12 +67,14 @@ $.fn.dotCheckbox = (opt) ->
           offsetIndex = img.width
           setInterval () ->
             # clear
-            $t.find("input[type='checkbox']").attr "checked", false
+            $all.attr "checked", false
             # draw
             for rowIndex in [0..($_.dots.length - 1)]
               row = $_.dots[rowIndex]
               for colIndex in [0..(row.length - 1)]
-                $checkbox = $t.find "input[type='checkbox']:eq(#{rowIndex*$_.dots.length + colIndex + (offsetIndex - if offsetIndex <= row.length/2 then 0 else row.length)})"
+                index = rowIndex*$_.dots.length + colIndex + (offsetIndex - if offsetIndex <= row.length/2 then 0 else row.length)
+                index = $all.length + index if index < 0
+                $checkbox = $ $all[index]
                 if row[colIndex].checked
                   $checkbox.attr "checked", "checked"
                 else
@@ -86,12 +89,14 @@ $.fn.dotCheckbox = (opt) ->
           offsetIndex = -1 * img.height
           setInterval () ->
             # clear
-            $t.find("input[type='checkbox']").attr "checked", false
+            $all.attr "checked", false
             # draw
             for rowIndex in [0..($_.dots.length - 1)]
               row = $_.dots[rowIndex]
               for colIndex in [0..(row.length - 1)]
-                $checkbox = $t.find "input[type='checkbox']:eq(#{rowIndex*$_.dots.length + colIndex + offsetIndex*$_.dots.length})"
+                index = rowIndex*$_.dots.length + colIndex + offsetIndex*$_.dots.length
+                index = $all.length + index if index < 0
+                $checkbox = $ $all[index]
                 if row[colIndex].checked
                   $checkbox.attr "checked", "checked"
                 else
