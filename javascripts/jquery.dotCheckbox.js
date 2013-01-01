@@ -94,9 +94,9 @@ https://github.com/bugcloud/dot-check-box/
               for (rowIndex = _k = 0, _ref1 = $_.dots.length - 1; 0 <= _ref1 ? _k <= _ref1 : _k >= _ref1; rowIndex = 0 <= _ref1 ? ++_k : --_k) {
                 row = $_.dots[rowIndex];
                 for (colIndex = _l = 0, _ref2 = row.length - 1; 0 <= _ref2 ? _l <= _ref2 : _l >= _ref2; colIndex = 0 <= _ref2 ? ++_l : --_l) {
-                  index = rowIndex * $_.dots.length + colIndex + (offsetIndex - (offsetIndex <= row.length / 2 ? 0 : row.length));
-                  if (index < 0) {
-                    index = $all.length + index;
+                  index = rowIndex * row.length + colIndex - (img.width - offsetIndex);
+                  if (index < rowIndex * row.length) {
+                    index += row.length;
                   }
                   $checkbox = $($all[index]);
                   if (row[colIndex].checked) {
