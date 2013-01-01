@@ -72,8 +72,9 @@ $.fn.dotCheckbox = (opt) ->
             for rowIndex in [0..($_.dots.length - 1)]
               row = $_.dots[rowIndex]
               for colIndex in [0..(row.length - 1)]
-                index = rowIndex*$_.dots.length + colIndex + (offsetIndex - if offsetIndex <= row.length/2 then 0 else row.length)
-                index = $all.length + index if index < 0
+                index = rowIndex*row.length + colIndex - (img.width - offsetIndex)
+                if index < rowIndex*row.length
+                  index += row.length
                 $checkbox = $ $all[index]
                 if row[colIndex].checked
                   $checkbox.attr "checked", "checked"
@@ -94,15 +95,14 @@ $.fn.dotCheckbox = (opt) ->
             for rowIndex in [0..($_.dots.length - 1)]
               row = $_.dots[rowIndex]
               for colIndex in [0..(row.length - 1)]
-                index = rowIndex*$_.dots.length + colIndex + offsetIndex*$_.dots.length
-                index = $all.length + index if index < 0
+                index = rowIndex*row.length + colIndex + offsetIndex*row.length
                 $checkbox = $ $all[index]
                 if row[colIndex].checked
                   $checkbox.attr "checked", "checked"
                 else
                   $checkbox.attr "checked", false
             offsetIndex++
-            if offsetIndex >= 0
+            if offsetIndex >= img.height
               offsetIndex = -1 * img.height
           , 1000
 
