@@ -11,6 +11,13 @@ $.fn.dotCheckbox = (opt) ->
   defaultOptions =
     animation: "none"
   options = $.extend {}, defaultOptions, opt
+  root = this
+  this.animationIntervals = []
+
+  this.clearInterval = () ->
+    for interval in root.animationIntervals
+      clearInterval interval
+
   this.each () ->
     $_ = $(this)
     if $("canvas").length <= 0
@@ -56,7 +63,7 @@ $.fn.dotCheckbox = (opt) ->
         $_.remove()
 
         if options.animation is "blink"
-          setInterval () ->
+          root.animationIntervals.push setInterval () ->
             $all.each () ->
               if $(this).is(":checked")
                 $(this).attr "checked", false
@@ -65,7 +72,7 @@ $.fn.dotCheckbox = (opt) ->
           , 1000
         else if options.animation is "horizontal-slide"
           offsetIndex = img.width
-          setInterval () ->
+          root.animationIntervals.push setInterval () ->
             # clear
             $all.attr "checked", false
             # draw
@@ -88,7 +95,7 @@ $.fn.dotCheckbox = (opt) ->
         else if options.animation is "vertical-slide"
           # $_.dots.length == img.height
           offsetIndex = -1 * img.height
-          setInterval () ->
+          root.animationIntervals.push setInterval () ->
             # clear
             $all.attr "checked", false
             # draw

@@ -14,11 +14,23 @@ https://github.com/bugcloud/dot-check-box/
   $ = jQuery;
 
   $.fn.dotCheckbox = function(opt) {
-    var defaultOptions, options;
+    var defaultOptions, options, root;
     defaultOptions = {
       animation: "none"
     };
     options = $.extend({}, defaultOptions, opt);
+    root = this;
+    this.animationIntervals = [];
+    this.clearInterval = function() {
+      var interval, _i, _len, _ref, _results;
+      _ref = root.animationIntervals;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        interval = _ref[_i];
+        _results.push(clearInterval(interval));
+      }
+      return _results;
+    };
     return this.each(function() {
       var $_, canvas, cont, img,
         _this = this;
@@ -77,7 +89,7 @@ https://github.com/bugcloud/dot-check-box/
           $_.parent().find("canvas:last").remove();
           $_.remove();
           if (options.animation === "blink") {
-            return setInterval(function() {
+            return root.animationIntervals.push(setInterval(function() {
               return $all.each(function() {
                 if ($(this).is(":checked")) {
                   return $(this).attr("checked", false);
@@ -85,10 +97,10 @@ https://github.com/bugcloud/dot-check-box/
                   return $(this).attr("checked", "checked");
                 }
               });
-            }, 1000);
+            }, 1000));
           } else if (options.animation === "horizontal-slide") {
             offsetIndex = img.width;
-            return setInterval(function() {
+            return root.animationIntervals.push(setInterval(function() {
               var $checkbox, colIndex, index, rowIndex, _k, _l, _ref1, _ref2;
               $all.attr("checked", false);
               for (rowIndex = _k = 0, _ref1 = $_.dots.length - 1; 0 <= _ref1 ? _k <= _ref1 : _k >= _ref1; rowIndex = 0 <= _ref1 ? ++_k : --_k) {
@@ -110,10 +122,10 @@ https://github.com/bugcloud/dot-check-box/
               if (offsetIndex <= 0) {
                 return offsetIndex = img.width;
               }
-            }, 1000);
+            }, 1000));
           } else if (options.animation === "vertical-slide") {
             offsetIndex = -1 * img.height;
-            return setInterval(function() {
+            return root.animationIntervals.push(setInterval(function() {
               var $checkbox, colIndex, index, rowIndex, _k, _l, _ref1, _ref2;
               $all.attr("checked", false);
               for (rowIndex = _k = 0, _ref1 = $_.dots.length - 1; 0 <= _ref1 ? _k <= _ref1 : _k >= _ref1; rowIndex = 0 <= _ref1 ? ++_k : --_k) {
@@ -132,7 +144,7 @@ https://github.com/bugcloud/dot-check-box/
               if (offsetIndex >= img.height) {
                 return offsetIndex = -1 * img.height;
               }
-            }, 1000);
+            }, 1000));
           }
         };
         return img.src = $_.attr('src');
