@@ -32,6 +32,15 @@ $(function() {
 **none**
 (アニメーションなし)です。
 
+## Stop animation
+
+```javascript
+$(function() {
+  var $dot = $("img.dot-check-box").dotCheckbox()
+  $dot.clearInterval()
+})
+```
+
 ## Sample
 http://bugcloud.github.com/dot-check-box/
 
